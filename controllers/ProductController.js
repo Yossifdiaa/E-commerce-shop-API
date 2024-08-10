@@ -6,7 +6,7 @@ const Order = require("../models/NewOrdersSchema");
 const {Slider} = require("../models/sliderSchema");
 const Box = require("../models/HomeBoxSchema");
 const Guest = require("../models/guestSchema");
-const db = require('../util/database')
+// const db = require('../util/database')
 
 
 
@@ -36,36 +36,36 @@ exports.getByBrandName = (req, res) => {
 
 
 
-// exports.getProducts = (req, res, next) => {
-//   ProductModel.find()
-//     .then(products => {
-//       // Assuming products have an 'images' field which stores filenames
-//       const updatedProducts = products.map(product => {
-//         // Append the host and filename to the image path
-//         if (product.images && product.images.indexOf("upload") === -1 && product.images.indexOf("src") === -1 && product.images.indexOf("image") === -1) {
-//           product.images = `${req.protocol}://${req.get("host")}/images/${product.images}`;
-//         } else {
-//           product.images = "";
-//         }
-//         return product;
-//       });
-//       res.json(updatedProducts);
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).send("Error retrieving products");
-//     });
-// };
+exports.getProducts = (req, res, next) => {
+  ProductModel.find()
+    .then(products => {
+      // Assuming products have an 'images' field which stores filenames
+      const updatedProducts = products.map(product => {
+        // Append the host and filename to the image path
+        if (product.images && product.images.indexOf("upload") === -1 && product.images.indexOf("src") === -1 && product.images.indexOf("image") === -1) {
+          product.images = `${req.protocol}://${req.get("host")}/images/${product.images}`;
+        } else {
+          product.images = "";
+        }
+        return product;
+      });
+      res.json(updatedProducts);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error retrieving products");
+    });
+};
 
-exports.getProducts = (req , res , next) => {
-  db.execute('SELECT * FROM products')
-  .then(result => {
-    console.log(result[0]);
-    res.json(result[0]);
-  }).catch(err => {
-    console.log(err);
-  });
-}
+// exports.getProducts = (req , res , next) => {
+//   db.execute('SELECT * FROM products')
+//   .then(result => {
+//     console.log(result[0]);
+//     res.json(result[0]);
+//   }).catch(err => {
+//     console.log(err);
+//   });
+// }
 
 
 
